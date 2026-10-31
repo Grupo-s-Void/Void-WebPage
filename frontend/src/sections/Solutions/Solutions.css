@@ -1,0 +1,446 @@
+
+/* ==========================================================
+   VOID — SOLUTIONS
+   ========================================================== */
+
+.VOID-section.VOID-solutions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: calc(100dvh - var(--void-header-h));
+  min-height: 0;
+  padding: 24px 0 32px;
+  overflow: hidden;
+}
+
+.VOID-solutions > .VOID-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-height: 0;
+}
+
+/* CABEÇALHO */
+
+.VOID-solutions .VOID-section-head {
+  flex-shrink: 0;
+  margin-bottom: 26px;
+}
+
+.VOID-solutions .VOID-section-head .VOID-lead {
+  max-width: 340px;
+}
+
+.VOID-solutions__title {
+  font-size: clamp(30px, 3.2vw, 42px);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+
+/* GRID */
+
+.VOID-solutions__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 16px;
+  width: 100%;
+}
+
+/* CARDS */
+
+.VOID-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 456px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--void-radius);
+  background:
+    radial-gradient(
+      ellipse 110% 75% at 50% 0%,
+      rgba(255, 255, 255, 0.035),
+      transparent 65%
+    ),
+    var(--void-surface);
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    opacity var(--void-slow) var(--void-ease),
+    transform var(--void-slow) var(--void-ease),
+    filter var(--void-slow) var(--void-ease),
+    border-color 360ms var(--void-ease),
+    box-shadow 360ms var(--void-ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.VOID-card.is-revealed {
+  transition:
+    transform var(--void-medium) var(--void-ease),
+    border-color 360ms var(--void-ease),
+    box-shadow 360ms var(--void-ease);
+}
+
+.VOID-card.is-revealed:hover {
+  transform: translateY(-5px);
+  border-color: rgba(215, 254, 250, 0.22);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.VOID-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(215, 254, 250, 0.045),
+    transparent 65%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 360ms var(--void-ease);
+}
+
+.VOID-card:hover::after {
+  opacity: 1;
+}
+
+.VOID-card > * {
+  position: relative;
+}
+
+/* TEXTURA DOS CARDS EM BREVE */
+
+.VOID-card--soon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    rgba(215, 254, 250, 0.2) 0.8px,
+    transparent 0.9px
+  );
+  background-size: 9px 9px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 60% at 70% 80%,
+    #000,
+    transparent 75%
+  );
+  mask-image: radial-gradient(
+    ellipse 80% 60% at 70% 80%,
+    #000,
+    transparent 75%
+  );
+  opacity: 0.28;
+  pointer-events: none;
+  transition: opacity 360ms var(--void-ease);
+}
+
+.VOID-card--soon:hover::before {
+  opacity: 0.48;
+}
+
+/* CABEÇALHO DOS CARDS */
+
+.VOID-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex-shrink: 0;
+  margin-bottom: 18px;
+}
+
+.VOID-card__num {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--void-muted);
+}
+
+.VOID-card__num::after {
+  content: "";
+  width: 20px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* STATUS */
+
+.VOID-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+  padding: 4px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.025);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #cfcfcf;
+  white-space: nowrap;
+}
+
+.VOID-pill::before {
+  content: "";
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.VOID-pill--producao::before {
+  background: #d7fefa;
+  box-shadow: 0 0 8px rgba(215, 254, 250, 0.45);
+}
+
+.VOID-pill--desenvolvimento::before {
+  background: #8fdce8;
+  box-shadow: 0 0 8px rgba(143, 220, 232, 0.35);
+}
+
+/* CONTEÚDO */
+
+.VOID-card__name {
+  margin: 0 0 10px;
+  font-size: clamp(18px, 1.7vw, 22px);
+  font-weight: 300;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.VOID-card__name .VOID-logo {
+  letter-spacing: 0.5em;
+  margin-right: 0.1em;
+}
+
+.VOID-card__text {
+  margin: 0;
+  max-width: 38ch;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--void-muted);
+}
+
+/* LINKS */
+
+.VOID-card__link {
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: 12px;
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 500;
+  transition: color 200ms var(--void-ease);
+}
+
+.VOID-card__link:hover {
+  color: #d7fefa;
+}
+
+/* ==========================================================
+   ANALYTICS — IMAGEM DO TABLET
+   ========================================================== */
+
+.VOID-card--live {
+  position: relative;
+  padding-bottom: 0;
+}
+
+/* Área da imagem */
+
+.VOID-card__preview {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  width: calc(100% + 40px);
+  margin: 12px -20px 0;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 80%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 80%,
+    transparent 100%
+  );
+}
+
+/* Imagem original do tablet */
+
+.VOID-card__preview img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: block;
+  width: 115%;
+  height: auto;
+  max-width: none;
+  object-fit: contain;
+  transform: translateX(-50%);
+  transition:
+    transform 800ms var(--void-ease),
+    filter 360ms var(--void-ease);
+}
+
+/* Hover */
+
+.VOID-card--live:hover .VOID-card__preview img {
+  transform: translateX(-50%) scale(1.05);
+  filter: brightness(1.12);
+}
+
+/* Link inferior */
+
+.VOID-card--live .VOID-card__link {
+  position: relative;
+  z-index: 2;
+  width: calc(100% + 40px);
+  margin: 0 -20px;
+  padding: 12px 20px 18px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--void-surface) 35%
+  );
+}
+
+/* CARDS EM BREVE */
+
+.VOID-card__soon {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px 8px 14px;
+}
+
+.VOID-card__soon h3 {
+  margin: 16px 0 8px;
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.VOID-card__soon .VOID-card__text {
+  max-width: 26ch;
+}
+
+.VOID-card__plus {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.015);
+  color: #d7fefa;
+  transition:
+    transform 360ms var(--void-ease),
+    border-color 200ms var(--void-ease),
+    background 200ms var(--void-ease),
+    box-shadow 360ms var(--void-ease);
+}
+
+.VOID-card:hover .VOID-card__plus {
+  transform: rotate(90deg) scale(1.06);
+  border-color: rgba(215, 254, 250, 0.4);
+  background: rgba(215, 254, 250, 0.035);
+  box-shadow: 0 0 30px rgba(215, 254, 250, 0.06);
+}
+
+/* TABLET */
+
+@media (max-width: 1024px) {
+  .VOID-section.VOID-solutions {
+    height: auto;
+    min-height: calc(100dvh - var(--void-header-h));
+    padding: 48px 0;
+    overflow: visible;
+  }
+
+  .VOID-solutions__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .VOID-card--live {
+    grid-column: 1 / -1;
+  }
+
+  .VOID-card {
+    height: 350px;
+  }
+
+  .VOID-card--live .VOID-card__preview img {
+    width: 85%;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 640px) {
+  .VOID-section.VOID-solutions {
+    padding: 36px 0 40px;
+  }
+
+  .VOID-solutions .VOID-section-head {
+    margin-bottom: 24px;
+  }
+
+  .VOID-solutions__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .VOID-solutions__title {
+    font-size: clamp(28px, 7vw, 36px);
+  }
+
+  .VOID-card,
+  .VOID-card--live {
+    grid-column: auto;
+    height: 340px;
+  }
+
+  .VOID-card__soon {
+    padding: 8px 8px 14px;
+  }
+
+  .VOID-card--live .VOID-card__preview img {
+    width: 110%;
+  }
+}
+
+/* TELAS COM POUCA ALTURA */
+
+@media (min-width: 1025px) and (max-height: 650px) {
+  .VOID-section.VOID-solutions {
+    height: auto;
+    min-height: calc(100dvh - var(--void-header-h));
+    padding: 32px 0;
+    overflow: visible;
+  }
+
+  .VOID-card {
+    height: 330px;
+  }
+}

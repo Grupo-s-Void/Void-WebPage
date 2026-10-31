@@ -1,0 +1,146 @@
+
+/* ==========================================================
+   VOID — FOOTER
+   ========================================================== */
+
+.VOID-footer {
+  width: 100%;
+  padding: 32px 0 20px;
+  border-top: 0;
+  background: transparent;
+  color: var(--void-muted);
+  font-size: 12px;
+}
+
+/* COLUNAS */
+
+.VOID-footer__top {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr 1fr 1fr;
+  gap: clamp(24px, 3vw, 48px);
+  padding-bottom: 28px;
+}
+
+/* MARCA */
+
+.VOID-footer__logo {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: var(--void-text);
+  font-size: 20px;
+}
+
+.VOID-footer__brand p {
+  margin: 0 0 16px;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+/* REDES SOCIAIS */
+
+.VOID-footer__social {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.VOID-footer__social a {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--void-line-strong);
+  border-radius: 50%;
+  color: var(--void-text);
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.VOID-footer__social a:hover {
+  background: #fff;
+  border-color: #fff;
+  color: #000;
+  transform: translateY(-2px);
+}
+
+/* LINKS */
+
+.VOID-footer__col h3 {
+  margin: 0 0 14px;
+  color: var(--void-text);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.VOID-footer__col ul {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.VOID-footer__col a {
+  display: inline-block;
+  transition:
+    color var(--void-fast) ease,
+    transform var(--void-medium) var(--void-ease);
+}
+
+.VOID-footer__col a:hover {
+  color: var(--void-text);
+  transform: translateX(3px);
+}
+
+.VOID-footer__col ul {
+  word-break: break-word;
+}
+
+/* RODAPÉ INFERIOR */
+
+.VOID-footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 18px;
+  border-top: 1px solid var(--void-line);
+  color: var(--void-dim);
+  font-size: 11px;
+}
+
+/* TABLET */
+
+@media (max-width: 900px) {
+  .VOID-footer__top {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+  }
+
+  .VOID-footer__brand {
+    grid-column: 1 / -1;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+  .VOID-footer__top {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .VOID-footer__brand {
+    grid-column: auto;
+  }
+
+  .VOID-footer__bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

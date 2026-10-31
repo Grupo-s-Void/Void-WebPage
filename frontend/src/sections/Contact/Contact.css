@@ -1,0 +1,116 @@
+
+/* ==========================================================
+   VOID — CONTACT + FOOTER
+   ========================================================== */
+
+.VOID-section.VOID-contact {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: calc(100dvh - var(--void-header-h));
+
+  padding: 48px 0 0;
+  overflow: hidden;
+  isolation: isolate;
+
+  background-color: #000;
+  background-image: url("../../assets/veil.png");
+  background-repeat: no-repeat;
+
+  /* Mantém a proporção original da imagem */
+  background-size: 100% auto;
+
+  /* Move a imagem para cima */
+  background-position: center calc(50% - 140px);
+}
+
+/* ==========================================================
+   CONTEÚDO
+   ========================================================== */
+
+.VOID-contact__grid {
+  position: relative;
+  z-index: 1;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+
+  gap: 40px 64px;
+  width: 100%;
+}
+
+.VOID-contact__side {
+  justify-self: end;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  max-width: 400px;
+  gap: 28px;
+}
+
+/* ==========================================================
+   FOOTER INTEGRADO
+   ========================================================== */
+
+.VOID-contact > .VOID-footer {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  margin-top: auto;
+
+  background: transparent;
+  border-top: none;
+}
+
+/* ==========================================================
+   TABLET
+   ========================================================== */
+
+@media (max-width: 860px) {
+  .VOID-section.VOID-contact {
+    min-height: calc(100dvh - var(--void-header-h));
+    padding-top: 48px;
+
+    background-size: auto 85%;
+    background-position: center 55%;
+  }
+
+  .VOID-contact__grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .VOID-contact__side {
+    justify-self: start;
+  }
+}
+
+/* ==========================================================
+   MOBILE
+   ========================================================== */
+
+@media (max-width: 640px) {
+  .VOID-section.VOID-contact {
+    padding-top: 36px;
+
+    background-size: auto 65%;
+    background-position: center 60%;
+  }
+
+  .VOID-contact__side {
+    width: 100%;
+  }
+
+  .VOID-contact__side .VOID-btn {
+    width: 100%;
+    justify-content: center;
+    height: 48px;
+  }
+}
