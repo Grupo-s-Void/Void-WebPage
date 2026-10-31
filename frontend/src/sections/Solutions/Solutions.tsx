@@ -1,4 +1,3 @@
-
 import { ArrowRight, Plus } from "../../components/ui/Icons";
 import Reveal from "../../components/ui/Reveal";
 import controlImage from "../../assets/voidcontrol.png";
@@ -56,13 +55,7 @@ const STATUS: Record<StatusSistema, string> = {
   desenvolvimento: "Em desenvolvimento",
 };
 
-function SistemaCard({
-  sistema,
-  index,
-}: {
-  sistema: Sistema;
-  index: number;
-}) {
+function SistemaCard({ sistema, index }: { sistema: Sistema; index: number }) {
   const emProducao = sistema.status === "producao";
 
   return (
@@ -152,11 +145,7 @@ export default function Solutions() {
 
         <div className="VOID-solutions__grid">
           {SISTEMAS.map((sistema, index) => (
-            <SistemaCard
-              key={sistema.id}
-              sistema={sistema}
-              index={index}
-            />
+            <SistemaCard key={sistema.id} sistema={sistema} index={index} />
           ))}
         </div>
       </div>
