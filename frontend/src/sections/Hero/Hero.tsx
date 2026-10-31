@@ -1,4 +1,3 @@
-
 import heroV from "../../assets/void-fundo.png";
 import { ArrowRight } from "../../components/ui/Icons";
 import "./Hero.css";
@@ -34,8 +33,9 @@ export default function Hero() {
           </h1>
 
           <p className="VOID-hero__text">
-            Desenvolvemos sistemas e soluções de inteligência artificial
-            <br className="VOID-hero__br" /> para transformar dados em decisões reais.
+            Desenvolvemos tecnologia para simplificar processos,
+            <br className="VOID-hero__br" /> automatizar operações e criar
+            soluções inteligentes para empresas.
           </p>
 
           <a href="#solucoes" className="VOID-btn VOID-btn--light">
