@@ -18,7 +18,7 @@ export const REDES_SOCIAIS = {
 } as const;
 
 /** Seções da página, na ordem em que aparecem. */
-export const SECOES = ["inicio", "solucoes", "sobre", "contato"] as const;
+export const SECOES = ["inicio", "solucoes", "planos", "contato"] as const;
 
 export type SecaoId = (typeof SECOES)[number];
 
@@ -26,7 +26,7 @@ export type SecaoId = (typeof SECOES)[number];
 export const NAVEGACAO: { id: SecaoId; rotulo: string }[] = [
   { id: "inicio", rotulo: "Início" },
   { id: "solucoes", rotulo: "Soluções" },
-  { id: "sobre", rotulo: "Sobre" },
+  { id: "planos", rotulo: "Planos" },
   { id: "contato", rotulo: "Contato" },
 ];
 

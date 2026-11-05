@@ -16,7 +16,7 @@
   overflow: hidden;
   isolation: isolate;
 
-  background-color: #000;
+  background-color: var(--void-black);
   background-image: url("../../assets/veil.png");
   background-repeat: no-repeat;
 
@@ -112,5 +112,25 @@
     width: 100%;
     justify-content: center;
     height: 48px;
+  }
+}
+
+/* ==========================================================
+   CENTRALIZADO (tablet retrato e mobile)
+   ========================================================== */
+
+@media (max-width: 860px) {
+  .VOID-contact__grid {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .VOID-contact__side {
+    justify-self: center;
+    align-items: center;
+  }
+
+  .VOID-contact__side .VOID-lead {
+    margin-inline: auto;
   }
 }

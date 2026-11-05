@@ -1,0 +1,512 @@
+
+/* ==========================================================
+   VOID — PLANS
+   Palavra gigante ao fundo + cards de vidro fosco.
+   ========================================================== */
+
+.VOID-section.VOID-plans {
+  --plans-title: clamp(96px, min(21vw, 27vh), 320px);
+  --plans-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: calc(100dvh - var(--void-header-h));
+  padding: clamp(28px, 6vh, 72px) 0 clamp(28px, 5vh, 60px);
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 8%, rgba(255, 255, 255, 0.05), transparent 70%),
+    transparent;
+}
+
+.VOID-plans__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* HEADING — a palavra fica atrás dos cards */
+
+.VOID-plans__heading {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+.VOID-plans__heading .VOID-label {
+  margin-bottom: clamp(6px, 1.4vw, 14px);
+  color: var(--void-moonlight);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.19em;
+}
+
+.VOID-plans__title {
+  margin: 0;
+  font-size: var(--plans-title);
+  font-weight: 600;
+  line-height: 0.86;
+  letter-spacing: -0.06em;
+  /* folga para o degradê pintar as letras inteiras (senão a base é cortada) */
+  padding: 0.08em 0.04em 0.2em;
+  margin: -0.08em 0 -0.2em;
+  color: transparent;
+  background: linear-gradient(
+    180deg,
+    var(--void-white) 8%,
+    rgba(255, 255, 255, 0.7) 55%,
+    rgba(255, 255, 255, 0.6) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  user-select: none;
+}
+
+/* Estado inicial do paralaxe: o GSAP faz fade-in e leva a escala
+   de 0.85 a 1.1 conforme o scroll cruza a seção (scrub). */
+.VOID-plans__title {
+  opacity: 0;
+  transform: scale(0.85);
+  /* cresce para cima, longe dos cards */
+  transform-origin: 50% 100%;
+}
+
+.VOID-plans__intro {
+  position: relative;
+  z-index: 3;
+  max-width: 460px;
+  margin: 0 0 clamp(18px, 3vw, 30px);
+  color: var(--void-moonlight);
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.8;
+}
+
+/* GRID DOS CARDS */
+
+.VOID-plans__carousel {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1120px;
+  margin: calc(var(--plans-title) * -0.24) auto 0;
+}
+
+.VOID-plans__track {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+}
+
+/* CARDS — vidro fosco */
+
+.VOID-plans__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 30px 26px 26px;
+  isolation: isolate;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.01) 45%),
+    rgba(11, 15, 20, 0.2);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  backdrop-filter: blur(12px) saturate(150%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 30px 60px -34px rgba(0, 0, 0, 0.7);
+  transition:
+    transform 360ms var(--void-ease),
+    border-color 360ms var(--void-ease),
+    box-shadow 360ms var(--void-ease);
+}
+
+/* grão fino = acabamento fosco */
+.VOID-plans__card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--plans-grain);
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* O card em si entra via GSAP (scale 0.9 → 1, .VOID-anim--scale).
+   Textos, ícones e botão surgem em sequência depois do card,
+   quando o GSAP adiciona .is-visible ao carrossel. */
+
+.VOID-plans__carousel:not(.is-visible) .VOID-plans__card > * {
+  opacity: 0;
+}
+
+.VOID-plans__carousel.is-visible .VOID-plans__card {
+  --t: calc(var(--i, 0) * 100ms + 260ms);
+}
+
+.VOID-plans__carousel.is-visible :is(
+    .VOID-plans__tag,
+    .VOID-plans__nome,
+    .VOID-plans__preco,
+    .VOID-plans__descricao,
+    .VOID-plans__lista li,
+    .VOID-plans__cta
+  ) {
+  animation: void-plans-item-in 0.7s var(--void-ease) backwards;
+}
+
+.VOID-plans__carousel.is-visible .VOID-plans__tag { animation-delay: var(--t); }
+.VOID-plans__carousel.is-visible .VOID-plans__nome { animation-delay: calc(var(--t) + 40ms); }
+.VOID-plans__carousel.is-visible .VOID-plans__preco { animation-delay: calc(var(--t) + 120ms); }
+.VOID-plans__carousel.is-visible .VOID-plans__descricao { animation-delay: calc(var(--t) + 200ms); }
+.VOID-plans__carousel.is-visible .VOID-plans__lista li {
+  animation-delay: calc(var(--t) + 280ms + var(--k, 0) * 70ms);
+}
+.VOID-plans__carousel.is-visible .VOID-plans__cta { animation-delay: calc(var(--t) + 700ms); }
+
+.VOID-plans__carousel.is-visible .VOID-plans__check {
+  animation: void-plans-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  animation-delay: calc(var(--t) + 340ms + var(--k, 0) * 70ms);
+}
+
+@keyframes void-plans-item-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+}
+
+@keyframes void-plans-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+}
+
+@media (hover: hover) {
+  .VOID-plans__card.is-in:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.VOID-plans__card.is-destaque {
+  border-color: rgba(167, 180, 190, 0.3);
+  background:
+    radial-gradient(ellipse 120% 70% at 50% 0%, rgba(167, 180, 190, 0.09), transparent 65%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.015) 45%),
+    rgba(11, 15, 20, 0.3);
+  box-shadow:
+    inset 0 1px 0 rgba(167, 180, 190, 0.22),
+    0 0 0 1px rgba(167, 180, 190, 0.06),
+    0 35px 70px -30px rgba(167, 180, 190, 0.18);
+}
+
+@media (hover: hover) {
+  .VOID-plans__card.is-destaque.is-in:hover {
+    transform: translateY(-8px);
+    border-color: rgba(167, 180, 190, 0.5);
+  }
+}
+
+/* SELO "MAIS POPULAR" — recorte pixelado */
+
+.VOID-plans__tag {
+  position: absolute;
+  top: -12px;
+  left: 26px;
+  padding: 5px 10px;
+  font-family: "Pixelify Sans", var(--void-font);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--void-black);
+  background: var(--void-moonlight);
+  clip-path: polygon(
+    0 4px, 4px 4px, 4px 0,
+    calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
+    4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+  );
+}
+
+.VOID-plans__nome {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--void-moonlight);
+}
+
+.VOID-plans__preco {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.VOID-plans__preco strong {
+  font-size: clamp(32px, 3.2vw, 44px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: transparent;
+  background: linear-gradient(90deg, var(--void-white) 55%, rgba(255, 255, 255, 0.3));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.VOID-plans__preco span {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--void-dim);
+}
+
+.VOID-plans__descricao {
+  min-height: 40px;
+  margin: 12px 0 0;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--void-moonlight);
+}
+
+.VOID-plans__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 22px 0 0;
+  padding: 20px 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  list-style: none;
+}
+
+.VOID-plans__lista li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--void-moonlight);
+}
+
+/* Marcador pixelado */
+
+.VOID-plans__check {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--void-black);
+  background: var(--void-moonlight);
+  clip-path: polygon(
+    0 2px, 2px 2px, 2px 0,
+    calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+    100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+    2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+  );
+}
+
+.VOID-plans__card:not(.is-destaque) .VOID-plans__check {
+  color: var(--void-moonlight);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.VOID-plans__cta {
+  width: 100%;
+  margin-top: auto;
+}
+
+.VOID-plans__lista {
+  margin-bottom: 24px;
+}
+
+/* TABLET */
+
+@media (max-width: 1024px) {
+  .VOID-plans__carousel {
+    max-width: 920px;
+  }
+
+  .VOID-plans__card {
+    padding: 26px 20px 22px;
+  }
+}
+
+/* MOBILE — carrossel centralizado */
+
+@media (max-width: 720px), (max-height: 520px) {
+  .VOID-section.VOID-plans {
+    --plans-card-w: min(76vw, 340px);
+    padding: 56px 0 48px;
+  }
+
+  .VOID-plans__intro {
+    max-width: 320px;
+    font-size: 12px;
+  }
+
+  .VOID-plans__carousel {
+    max-width: none;
+  }
+
+  .VOID-plans__track {
+    display: flex;
+    justify-content: flex-start;
+    gap: 14px;
+    padding: 20px calc((100vw - var(--plans-card-w)) / 2) 8px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .VOID-plans__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .VOID-plans__card {
+    flex: 0 0 var(--plans-card-w);
+    scroll-snap-align: center;
+    padding: 24px 20px 20px;
+  }
+
+}
+
+@media (max-width: 720px) {
+  .VOID-section.VOID-plans {
+    --plans-title: clamp(84px, 25vw, 150px);
+    padding: 36px 0 40px;
+  }
+
+  .VOID-plans__track {
+    padding-top: 16px;
+  }
+
+  .VOID-plans__card {
+    padding: 20px 18px 18px;
+    border-radius: 20px;
+  }
+
+  .VOID-plans__preco {
+    margin-top: 8px;
+  }
+
+  .VOID-plans__preco strong {
+    font-size: 30px;
+  }
+
+  .VOID-plans__descricao {
+    min-height: 0;
+    margin-top: 6px;
+    font-size: 11.5px;
+    line-height: 1.6;
+  }
+
+  .VOID-plans__lista {
+    gap: 8px;
+    margin-top: 14px;
+    margin-bottom: 16px;
+    padding-top: 14px;
+  }
+
+  .VOID-plans__lista li {
+    font-size: 11.5px;
+  }
+
+  .VOID-plans__cta {
+    height: 42px;
+  }
+}
+
+@media (max-width: 480px) {
+  .VOID-section.VOID-plans {
+    --plans-card-w: min(80vw, 340px);
+  }
+
+  .VOID-plans__card {
+    padding: 22px 18px 18px;
+  }
+
+  .VOID-plans__preco strong {
+    font-size: 30px;
+  }
+
+}
+
+/* TELAS BAIXAS (notebooks) — tudo cabe sem cortar os cards */
+
+@media (min-width: 721px) and (min-height: 521px) and (max-height: 960px) {
+  .VOID-plans__intro {
+    display: none;
+  }
+
+  .VOID-plans__heading .VOID-label {
+    margin-bottom: 8px;
+  }
+
+  .VOID-plans__card {
+    padding: 22px 22px 20px;
+  }
+
+  .VOID-plans__lista {
+    gap: 9px;
+    margin-top: 16px;
+    margin-bottom: 18px;
+    padding-top: 16px;
+  }
+
+  .VOID-plans__preco {
+    margin-top: 10px;
+  }
+
+  .VOID-plans__descricao {
+    min-height: 0;
+    margin-top: 8px;
+  }
+
+}
+
+@media (min-width: 721px) and (min-height: 521px) and (max-height: 700px) {
+  .VOID-plans__descricao {
+    display: none;
+  }
+}
+
+@media (max-height: 520px) {
+  .VOID-plans__intro {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .VOID-plans__carousel:not(.is-visible) .VOID-plans__card > * {
+    opacity: 1;
+  }
+
+  .VOID-plans__carousel.is-visible .VOID-plans__card,
+  .VOID-plans__carousel.is-visible .VOID-plans__card * {
+    animation: none;
+  }
+
+  .VOID-plans__title {
+    opacity: 1;
+    transform: none;
+  }
+}

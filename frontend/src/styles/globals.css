@@ -7,17 +7,23 @@
 :root {
   color-scheme: dark;
 
-  /* Cores */
-  --void-bg: #040404;
-  --void-surface: #0a0a0b;
-  --void-surface-2: #111113;
-  --void-line: rgba(255, 255, 255, 0.08);
-  --void-line-strong: rgba(255, 255, 255, 0.16);
-  --void-text: #f3f3f3;
-  --void-muted: #a3a3a3;
-  --void-dim: #8a8a8a;
-  --void-green: #3ddc84;
-  --void-blue: #8fb4ff;
+  /* Paleta oficial VOID. Preto predomina; Steel e Moonlight só em detalhes.
+     Transparências usam apenas estes mesmos valores RGB. */
+  --void-black: #000000;     /* fundo predominante */
+  --void-midnight: #0b0f14;  /* 11, 15, 20   — superfícies/cards */
+  --void-steel: #394b59;     /* 57, 75, 89   — linhas, detalhes */
+  --void-moonlight: #a7b4be; /* 167, 180, 190 — texto de apoio, destaques */
+  --void-white: #ffffff;     /* títulos e texto principal */
+
+  /* Aliases usados pelos componentes */
+  --void-bg: var(--void-black);
+  --void-surface: var(--void-midnight);
+  --void-surface-2: var(--void-midnight);
+  --void-line: rgba(57, 75, 89, 0.45);
+  --void-line-strong: var(--void-steel);
+  --void-text: var(--void-white);
+  --void-muted: var(--void-moonlight);
+  --void-dim: rgba(167, 180, 190, 0.7); /* texto discreto: Moonlight translúcido (steel é só para linhas) */
 
   /* Tipografia */
   --void-font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -47,7 +53,6 @@
 
 html {
   background: var(--void-bg);
-  scroll-behavior: smooth;
   scroll-padding-top: var(--void-header-h);
   scrollbar-width: none;
   -webkit-text-size-adjust: 100%;
@@ -100,12 +105,12 @@ button {
 }
 
 ::selection {
-  background: #e6e6e6;
-  color: #000;
+  background: var(--void-moonlight);
+  color: var(--void-black);
 }
 
 :focus-visible {
-  outline: 2px solid #ddd;
+  outline: 2px solid var(--void-moonlight);
   outline-offset: 4px;
   border-radius: 4px;
 }
@@ -119,8 +124,8 @@ button {
   z-index: 100;
   padding: 10px 16px;
   border-radius: 999px;
-  background: #fff;
-  color: #000;
+  background: var(--void-white);
+  color: var(--void-black);
   font-size: 13px;
   font-weight: 500;
   transform: translateY(-160%);
@@ -278,12 +283,12 @@ button {
 }
 
 .VOID-btn--light {
-  background: #f5f5f5;
-  color: #000;
+  background: var(--void-white);
+  color: var(--void-black);
 }
 
 .VOID-btn--light:hover {
-  background: #fff;
+  background: var(--void-white);
   box-shadow: 0 10px 30px -10px rgba(255, 255, 255, 0.35);
 }
 
@@ -317,23 +322,45 @@ button {
   font-weight: 500;
 }
 
-/* ---------- Animação de entrada (Reveal) ---------- */
+/* ---------- Animações GSAP: estados iniciais ----------
+   Tudo que o GSAP anima nasce oculto aqui, antes de qualquer JS rodar.
+   Ao terminar, o GSAP adiciona `.is-in` e o CSS assume o estado final. */
 
-.VOID-reveal {
+.VOID-anim {
   opacity: 0;
-  transform: translate3d(0, 28px, 0);
-  filter: blur(6px);
-  transition:
-    opacity var(--void-slow) var(--void-ease),
-    transform var(--void-slow) var(--void-ease),
-    filter var(--void-slow) var(--void-ease);
-  transition-delay: var(--reveal-delay, 0ms);
 }
 
-.VOID-reveal.is-visible {
+.VOID-anim--up {
+  transform: translate3d(0, 40px, 0);
+}
+
+.VOID-anim--left {
+  transform: translate3d(-60px, 0, 0);
+}
+
+.VOID-anim--right {
+  transform: translate3d(60px, 0, 0);
+}
+
+.VOID-anim--scale {
+  transform: scale(0.9);
+}
+
+/* Aceleração por GPU em cards e títulos. Não usar em elementos com
+   filhos position: fixed (ex.: header), pois will-change: transform
+   vira o bloco de contenção deles. */
+.VOID-gpu {
+  will-change: transform, opacity;
+}
+
+/* Transições CSS brigariam com os quadros do GSAP durante a entrada. */
+.VOID-anim:not(.is-in) {
+  transition: none !important;
+}
+
+.VOID-anim.is-in {
   opacity: 1;
   transform: none;
-  filter: none;
 }
 
 /* ---------- Responsividade ---------- */
@@ -389,9 +416,63 @@ button {
     transition-delay: 0ms !important;
   }
 
-  .VOID-reveal {
+  .VOID-anim,
+  .VOID-anim--up,
+  .VOID-anim--left,
+  .VOID-anim--right,
+  .VOID-anim--scale {
     opacity: 1;
     transform: none;
-    filter: none;
+  }
+}
+
+/* ---------- Mobile/tablet: uma seção por vez ----------
+   No desktop quem faz isso é o useSectionScroll (roda do mouse).
+   No touch, o snap nativo leva sempre para a próxima seção ao soltar o dedo;
+   seções mais altas que a tela continuam rolando livremente por dentro. */
+
+@media (max-width: 1024px), (hover: none) {
+  html {
+    scroll-snap-type: y mandatory;
+    /* o deslocamento do header vem do scroll-margin-top de cada seção */
+    scroll-padding-top: 0;
+  }
+
+  .VOID-hero,
+  .VOID-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .VOID-hero {
+    scroll-margin-top: 0;
+  }
+
+  /* Pontos internos: sem eles, o snap obrigatório trava no topo de seções
+     mais altas que a tela (ex.: cards de Soluções e o footer no mobile). */
+  .VOID-solutions__grid .VOID-card {
+    scroll-snap-align: center;
+    scroll-margin-top: var(--void-header-h);
+  }
+
+  .VOID-contact > .VOID-footer {
+    scroll-snap-align: end;
+  }
+}
+
+/* ---------- Centralizado (tablet retrato e mobile) ---------- */
+
+@media (max-width: 860px) {
+  .VOID-section-head {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .VOID-section-head .VOID-lead {
+    justify-self: center;
+  }
+
+  .VOID-section-head .VOID-title {
+    text-wrap: balance;
   }
 }

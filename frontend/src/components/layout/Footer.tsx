@@ -15,7 +15,7 @@ const COLUNAS: { titulo: string; links: Link[] }[] = [
   {
     titulo: "Empresa",
     links: [
-      { rotulo: "Sobre", href: "#sobre" },
+      { rotulo: "Planos", href: "#planos" },
       { rotulo: "Contato", href: "#contato" },
       { rotulo: "Trabalhe conosco", href: mailto("Trabalhe conosco") },
     ],
@@ -38,7 +38,7 @@ const REDES = [
 
 export default function Footer() {
   return (
-    <footer className="VOID-footer">
+    <footer className="VOID-footer VOID-anim">
       <div className="VOID-container">
         <div className="VOID-footer__top">
           <div className="VOID-footer__brand">

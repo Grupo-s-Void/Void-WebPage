@@ -1,5 +1,4 @@
 import { ArrowRight, Plus } from "../../components/ui/Icons";
-import Reveal from "../../components/ui/Reveal";
 import controlImage from "../../assets/voidcontrol.png";
 import "./Solutions.css";
 
@@ -59,10 +58,8 @@ function SistemaCard({ sistema, index }: { sistema: Sistema; index: number }) {
   const emProducao = sistema.status === "producao";
 
   return (
-    <Reveal
-      as="article"
-      delay={index * 120}
-      className={`VOID-card ${
+    <article
+      className={`VOID-card VOID-anim VOID-anim--up VOID-gpu ${
         emProducao ? "VOID-card--live" : "VOID-card--soon"
       }`}
     >
@@ -111,7 +108,7 @@ function SistemaCard({ sistema, index }: { sistema: Sistema; index: number }) {
         {sistema.link.rotulo}
         <ArrowRight />
       </a>
-    </Reveal>
+    </article>
   );
 }
 
@@ -123,8 +120,8 @@ export default function Solutions() {
       aria-labelledby="void-solutions-title"
     >
       <div className="VOID-container">
-        <Reveal className="VOID-section-head">
-          <div>
+        <div className="VOID-section-head">
+          <div className="VOID-anim VOID-anim--up VOID-gpu">
             <span className="VOID-label">Nossos sistemas</span>
 
             <h2
@@ -137,11 +134,11 @@ export default function Solutions() {
             </h2>
           </div>
 
-          <p className="VOID-lead">
+          <p className="VOID-lead VOID-anim VOID-anim--up">
             Estamos desenvolvendo uma linha de sistemas focados em resolver
             desafios reais das empresas, com o apoio da inteligência artificial.
           </p>
-        </Reveal>
+        </div>
 
         <div className="VOID-solutions__grid">
           {SISTEMAS.map((sistema, index) => (

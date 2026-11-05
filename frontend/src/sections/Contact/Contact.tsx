@@ -1,6 +1,5 @@
 import { mailto } from "../../config/site";
 import { ArrowRight } from "../../components/ui/Icons";
-import Reveal from "../../components/ui/Reveal";
 import Footer from "../../components/layout/Footer";
 import "./Contact.css";
 
@@ -14,7 +13,7 @@ export default function Contact() {
       <div className="VOID-contact__veil" aria-hidden="true" />
 
       <div className="VOID-container VOID-contact__grid">
-        <Reveal>
+        <div className="VOID-contact__intro VOID-anim VOID-anim--left VOID-gpu">
           <span className="VOID-label">
             Próximos passos
           </span>
@@ -27,11 +26,10 @@ export default function Contact() {
             <br />
             o futuro juntos.
           </h2>
-        </Reveal>
+        </div>
 
-        <Reveal
-          className="VOID-contact__side"
-          delay={120}
+        <div
+          className="VOID-contact__side VOID-anim VOID-anim--right VOID-gpu"
         >
           <p className="VOID-lead">
             Seja um dos primeiros a acompanhar nossas soluções
@@ -46,7 +44,7 @@ export default function Contact() {
             Fale com um especialista
             <ArrowRight />
           </a>
-        </Reveal>
+        </div>
       </div>
 
       <Footer />

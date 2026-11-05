@@ -20,7 +20,6 @@
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
-  animation: void-hero-in 1.6s var(--void-ease) both;
 }
 
 .VOID-hero__visual img {
@@ -44,25 +43,14 @@
     ),
     radial-gradient(
       ellipse 60% 55% at 22% 88%,
-      rgba(4, 4, 4, 0.75),
+      rgba(0, 0, 0, 0.75),
       transparent 70%
     ),
     radial-gradient(
       ellipse 35% 40% at 75% 55%,
-      rgba(143, 220, 232, 0.035),
+      rgba(167, 180, 190, 0.035),
       transparent 100%
     );
-}
-
-@keyframes void-hero-in {
-  from {
-    opacity: 0;
-    transform: scale(1.04);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
 }
 
 /* ---------- Estrutura ---------- */
@@ -95,18 +83,6 @@
   align-items: flex-start;
   gap: clamp(14px, 2.4vh, 22px);
   flex-shrink: 0;
-  animation: void-hero-text 1.2s 0.25s var(--void-ease) both;
-}
-
-@keyframes void-hero-text {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .VOID-hero__title {
@@ -123,7 +99,7 @@
     105deg,
     var(--void-text) 0%,
     var(--void-text) 72%,
-    #d7fefa 100%
+    var(--void-moonlight) 100%
   );
   background-clip: text;
   -webkit-background-clip: text;
@@ -134,7 +110,7 @@
   margin: 0;
   font-size: clamp(14px, 1.25vw, 17px);
   line-height: 1.65;
-  color: #c9c9c9;
+  color: var(--void-moonlight);
 }
 
 /* ---------- Botão ---------- */
@@ -156,7 +132,7 @@
 
 .VOID-hero__content .VOID-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 24px rgba(215, 254, 250, 0.10);
+  box-shadow: 0 0 24px rgba(167, 180, 190, 0.10);
 }
 
 /* ---------- Tags ---------- */
@@ -171,7 +147,7 @@
   border-left: 1px solid var(--void-line-strong);
   border-image: linear-gradient(
     180deg,
-    rgba(215, 254, 250, 0.45),
+    rgba(167, 180, 190, 0.45),
     rgba(255, 255, 255, 0.08)
   ) 1;
   font-size: 10px;
@@ -188,7 +164,7 @@
 }
 
 .VOID-hero__tags li:hover {
-  color: #d7fefa;
+  color: var(--void-moonlight);
   transform: translateX(-3px);
 }
 
@@ -208,26 +184,26 @@
 }
 
 .VOID-hero__scroll:hover {
-  color: #d7fefa;
+  color: var(--void-moonlight);
 }
 
 .VOID-hero__mouse {
   width: 22px;
   height: 34px;
-  border: 1px solid rgba(215, 254, 250, 0.42);
+  border: 1px solid rgba(167, 180, 190, 0.42);
   border-radius: 12px;
   display: flex;
   justify-content: center;
   padding-top: 7px;
-  box-shadow: inset 0 0 8px rgba(143, 220, 232, 0.035);
+  box-shadow: inset 0 0 8px rgba(167, 180, 190, 0.035);
   transition:
     border-color 300ms ease,
     box-shadow 300ms ease;
 }
 
 .VOID-hero__scroll:hover .VOID-hero__mouse {
-  border-color: rgba(215, 254, 250, 0.8);
-  box-shadow: 0 0 12px rgba(215, 254, 250, 0.08);
+  border-color: rgba(167, 180, 190, 0.8);
+  box-shadow: 0 0 12px rgba(167, 180, 190, 0.08);
 }
 
 .VOID-hero__mouse span {
@@ -236,10 +212,10 @@
   border-radius: 2px;
   background: linear-gradient(
     180deg,
-    #d7fefa,
-    #8fdce8
+    var(--void-moonlight),
+    var(--void-moonlight)
   );
-  box-shadow: 0 0 7px rgba(143, 220, 232, 0.45);
+  box-shadow: 0 0 7px rgba(167, 180, 190, 0.45);
   animation: void-mouse 1.8s ease-in-out infinite;
 }
 
@@ -305,5 +281,28 @@
 
   .VOID-hero__scroll {
     display: none;
+  }
+}
+
+/* ---------- Centralizado (tablet retrato e mobile) ---------- */
+
+@media (max-width: 860px) {
+  .VOID-hero__content {
+    align-items: center;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .VOID-hero__content .VOID-btn {
+    align-self: center;
+  }
+
+  /* sem transform: o GSAP controla o transform de elementos .VOID-anim */
+  .VOID-hero__scroll {
+    right: 0;
+    left: 0;
+    bottom: 28px;
+    width: max-content;
+    margin-inline: auto;
   }
 }

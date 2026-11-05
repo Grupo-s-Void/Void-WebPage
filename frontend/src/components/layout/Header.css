@@ -7,41 +7,45 @@
   inset: 0 0 auto;
   z-index: 50;
   height: var(--void-header-h);
-  border-bottom: 1px solid transparent;
-  animation: void-header-in 1s 0.15s var(--void-ease) both;
-  transition:
-    background var(--void-medium) ease,
-    border-color var(--void-medium) ease,
-    backdrop-filter var(--void-medium) ease;
+  /* Nasce oculto; o GSAP faz o fade-in de 1.2s no load e deixa a opacidade
+     inline (o className muda com o estado do React, então não usamos .is-in).
+     Sem will-change/transform aqui: prenderia o menu móvel (position: fixed). */
+  opacity: 0;
 }
 
-@keyframes void-header-in {
-  from {
-    opacity: 0;
-    transform: translateY(-16px);
-  }
-  to {
+@media (prefers-reduced-motion: reduce) {
+  .VOID-header {
     opacity: 1;
-    transform: none;
   }
 }
 
-.VOID-header.is-scrolled {
-  background: rgba(4, 4, 4, 0.72);
+/* O vidro fica num pseudo-elemento: um backdrop-filter no próprio header
+   prenderia o menu móvel (position: fixed) dentro dele durante a transição. */
+.VOID-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: rgba(0, 0, 0, 0.72);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
-  border-bottom-color: var(--void-line);
+  border-bottom: 1px solid var(--void-line);
+  opacity: 0;
+  transition: opacity var(--void-medium) ease;
+  pointer-events: none;
 }
 
-/* backdrop-filter prenderia o menu fixo dentro do header; desliga com o menu aberto */
-.VOID-header.is-open {
-  background: transparent;
-  border-bottom-color: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+.VOID-header.is-scrolled::before {
+  opacity: 1;
+}
+
+.VOID-header.is-open::before {
+  opacity: 0;
 }
 
 .VOID-header__inner {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -97,7 +101,7 @@
   bottom: -2px;
   width: 22px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #fff 30%, #fff 70%, transparent);
+  background: linear-gradient(90deg, transparent, var(--void-white) 30%, var(--void-white) 70%, transparent);
   transform: translateX(-50%) scaleX(0);
 }
 
@@ -106,8 +110,8 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 8px #fff;
+  background: var(--void-white);
+  box-shadow: 0 0 8px var(--void-white);
   transform: translateX(-50%) scale(0);
 }
 
@@ -164,7 +168,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding: calc(var(--void-header-h) + 32px) var(--void-gutter) 40px;
-  background: rgba(4, 4, 4, 0.97);
+  background: rgba(0, 0, 0, 0.97);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   opacity: 0;
