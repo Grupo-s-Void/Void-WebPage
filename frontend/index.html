@@ -4,22 +4,70 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- %VITE_*% vem do .env: troque lá a URL de cada ambiente. -->
     <title>VOID — Inteligência que transforma negócios</title>
     <meta
       name="description"
       content="A VOID desenvolve sistemas e soluções de inteligência artificial para transformar dados em decisões reais."
     />
-    <meta name="theme-color" content="#040404" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+    <link rel="canonical" href="%VITE_SITE_URL%" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#000000" />
 
-    <!-- Compartilhamento (WhatsApp, LinkedIn etc.) -->
+    <!-- Ícones -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+
+    <!-- PWA: Android/Chrome/Edge (manifest), iOS (apple-*), Windows (msapplication-*) -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="application-name" content="VOID" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="VOID" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="msapplication-TileColor" content="#000000" />
+    <meta name="msapplication-TileImage" content="%VITE_SITE_URL%icons/icon-192.png" />
+
+    <!-- Compartilhamento: WhatsApp, LinkedIn, Facebook, Instagram, Telegram, Slack, Discord -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="VOID" />
     <meta property="og:locale" content="pt_BR" />
+    <meta property="og:url" content="%VITE_SITE_URL%" />
     <meta property="og:title" content="VOID — Inteligência que transforma negócios" />
     <meta
       property="og:description"
       content="Sistemas e soluções de inteligência artificial para transformar dados em decisões reais."
     />
+    <meta property="og:image" content="%VITE_SITE_URL%og-image.jpg" />
+    <meta property="og:image:secure_url" content="%VITE_SITE_URL%og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="VOID — Inteligência que transforma negócios." />
+
+    <!-- X / Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="VOID — Inteligência que transforma negócios" />
+    <meta
+      name="twitter:description"
+      content="Sistemas e soluções de inteligência artificial para transformar dados em decisões reais."
+    />
+    <meta name="twitter:image" content="%VITE_SITE_URL%og-image.jpg" />
+    <meta name="twitter:image:alt" content="VOID — Inteligência que transforma negócios." />
+
+    <!-- Google: nome e logo da empresa nos resultados -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "VOID",
+        "url": "%VITE_SITE_URL%",
+        "logo": "%VITE_SITE_URL%icons/icon-512.png",
+        "description": "Sistemas e soluções de inteligência artificial para empresas."
+      }
+    </script>
 
     <!-- Fonte -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,6 +78,7 @@
     />
   </head>
   <body>
+    <noscript>A VOID precisa de JavaScript ativado para exibir este site.</noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

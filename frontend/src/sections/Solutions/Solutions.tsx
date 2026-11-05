@@ -1,5 +1,6 @@
 import { ArrowRight, Plus } from "../../components/ui/Icons";
 import controlImage from "../../assets/voidcontrol.png";
+import { PRODUTOS, linkExterno } from "../../config/site";
 import "./Solutions.css";
 
 type StatusSistema = "producao" | "desenvolvimento";
@@ -25,8 +26,8 @@ const SISTEMAS: Sistema[] = [
       "Gestão e acompanhamento operacional em uma interface centralizada, com indicadores e informações em tempo real.",
     imagem: controlImage,
     link: {
-      rotulo: "Quero conhecer",
-      href: "#contato",
+      rotulo: "Acessar o VOID Control",
+      href: PRODUTOS.control.url,
     },
   },
   {
@@ -104,7 +105,7 @@ function SistemaCard({ sistema, index }: { sistema: Sistema; index: number }) {
         </div>
       )}
 
-      <a href={sistema.link.href} className="VOID-link VOID-card__link">
+      <a href={sistema.link.href} {...linkExterno(sistema.link.href)} className="VOID-link VOID-card__link">
         {sistema.link.rotulo}
         <ArrowRight />
       </a>

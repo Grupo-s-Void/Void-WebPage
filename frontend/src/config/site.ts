@@ -10,6 +10,21 @@ export const SITE = {
   cidade: "Videira - SC",
 } as const;
 
+/**
+ * Produtos da VOID. Por enquanto só o VOID Control está no ar.
+ * As URLs vêm do .env, para cada ambiente apontar para o lugar certo.
+ */
+export const PRODUTOS = {
+  control: {
+    nome: "VOID Control",
+    url: import.meta.env.VITE_CONTROL_URL || "https://grupo-s-void.github.io/Void-Control/#/inicio",
+  },
+} as const;
+
+/** Atributos para links que abrem fora do site. */
+export const linkExterno = (href: string) =>
+  /^https?:\/\//.test(href) ? { target: "_blank", rel: "noopener noreferrer" } : {};
+
 /** Redes sociais. Deixe `href` vazio para esconder o ícone. */
 export const REDES_SOCIAIS = {
   linkedin: "",

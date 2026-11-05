@@ -1,4 +1,4 @@
-import { REDES_SOCIAIS, SITE, mailto } from "../../config/site";
+import { PRODUTOS, REDES_SOCIAIS, SITE, linkExterno, mailto } from "../../config/site";
 import { Instagram, LinkedIn, YouTube } from "../ui/Icons";
 import "./Footer.css";
 
@@ -8,7 +8,7 @@ const COLUNAS: { titulo: string; links: Link[] }[] = [
   {
     titulo: "Soluções",
     links: [
-      { rotulo: "VOID Analytics", href: "#solucoes" },
+      { rotulo: PRODUTOS.control.nome, href: PRODUTOS.control.url },
       { rotulo: "Novos sistemas em breve", href: "#solucoes" },
     ],
   },
@@ -68,7 +68,13 @@ export default function Footer() {
               <ul>
                 {coluna.links.map((link) => (
                   <li key={link.rotulo}>
-                    {link.href ? <a href={link.href}>{link.rotulo}</a> : <span>{link.rotulo}</span>}
+                    {link.href ? (
+                      <a href={link.href} {...linkExterno(link.href)}>
+                        {link.rotulo}
+                      </a>
+                    ) : (
+                      <span>{link.rotulo}</span>
+                    )}
                   </li>
                 ))}
               </ul>
